@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"regexp"
 	"strconv"
 	"strings"
 	"testing"
@@ -865,6 +866,31 @@ func TestIntFromEnv(t *testing.T) {
 	if *i1 != 10 {
 		t.Errorf("Test %s failed. Want: [%s], got: [%d]", t.Name(), envValue, *i1)
 		return
+	}
+}
+
+func TestIntFromEnvFailed(t *testing.T) {
+	testArgs := []string{"progname"}
+
+	envName := "PROGNAME_FLAG_ARG1"
+	envValue := "xx10"
+
+	p := NewParser("", "descriptiom")
+	p.Int("f", "flag-arg1", &Options{
+		Required: true,
+		Env:      Env{Name: envName},
+	})
+
+	if err := os.Setenv(envName, envValue); err != nil {
+		t.Errorf("Test %s failed. Unable to set env %s=%s: %v", t.Name(), envName, envValue, err)
+		return
+	}
+	defer os.Unsetenv(envName)
+
+	err := p.Parse(testArgs)
+
+	if err == nil {
+		t.Errorf("Test %s expected error but no error occured", t.Name())
 	}
 }
 
@@ -2761,5 +2787,41 @@ func TestCommandHelpSetSnameOnly(t *testing.T) {
 
 	if arg.sname != "h" || arg.lname != "help" {
 		t.Error("Help arugment names should have defaulted")
+	}
+}
+
+func TestUsageShowsDefault(t *testing.T) {
+	lname := "long"
+	value := "8"
+
+	parser := NewParser("parser", "")
+	parser.Int("", lname, &Options{
+		Default: value,
+		Help:    "help",
+	})
+
+	usage := parser.Usage(nil)
+	match, _ := regexp.MatchString(fmt.Sprintf("%s.*\\. Default: %s", lname, value), usage)
+
+	if !match {
+		t.Errorf("`Default: %v` not found in usage", value)
+	}
+}
+
+func TestUsageShowsEnv(t *testing.T) {
+	lname := "long"
+	env := "ENV_VAR"
+
+	parser := NewParser("parser", "")
+	parser.Int("", lname, &Options{
+		Help: "help",
+		Env:  Env{Name: env},
+	})
+
+	usage := parser.Usage(nil)
+	match, _ := regexp.MatchString(fmt.Sprintf("%s.*\\. Env: %s", lname, env), usage)
+
+	if !match {
+		t.Errorf("`Env: %v` not found in usage", env)
 	}
 }
