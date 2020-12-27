@@ -1,6 +1,6 @@
 # Golang argparse
 
-[![GoDoc](https://godoc.org/github.com/akamensky/argparse?status.svg)](https://godoc.org/github.com/akamensky/argparse) [![Go Report Card](https://goreportcard.com/badge/github.com/akamensky/argparse)](https://goreportcard.com/report/github.com/akamensky/argparse) [![Coverage Status](https://coveralls.io/repos/github/akamensky/argparse/badge.svg?branch=master)](https://coveralls.io/github/akamensky/argparse?branch=master) [![Build Status](https://travis-ci.org/akamensky/argparse.svg?branch=master)](https://travis-ci.org/akamensky/argparse)
+[![GoDoc](https://godoc.org/github.com/vbogretsov/argparse?status.svg)](https://godoc.org/github.com/vbogretsov/argparse) [![Go Report Card](https://goreportcard.com/badge/github.com/vbogretsov/argparse)](https://goreportcard.com/report/github.com/vbogretsov/argparse) [![Coverage Status](https://coveralls.io/repos/github/vbogretsov/argparse/badge.svg?branch=master)](https://coveralls.io/github/vbogretsov/argparse?branch=master) [![Build Status](https://travis-ci.org/vbogretsov/argparse.svg?branch=master)](https://travis-ci.org/vbogretsov/argparse)
 
 Let's be honest -- Go's standard command line arguments parser `flag` terribly sucks. 
 It cannot come anywhere close to the Python's `argparse` module. This is why this project exists.
@@ -13,7 +13,7 @@ Which is where the name of this package comes from.
 To install and start using argparse simply do:
 
 ```
-$ go get -u -v github.com/akamensky/argparse
+$ go get -u -v github.com/vbogretsov/argparse
 ```
 
 You are good to go to write your first command line tool!
@@ -31,7 +31,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/akamensky/argparse"
+	"github.com/vbogretsov/argparse"
 	"os"
 )
 

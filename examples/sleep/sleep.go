@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/akamensky/argparse"
+	"github.com/vbogretsov/argparse"
 	"os"
 	"time"
 )

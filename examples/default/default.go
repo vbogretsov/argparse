@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/akamensky/argparse"
+	"github.com/vbogretsov/argparse"
 )
 
 func main() {
@@ -13,6 +13,7 @@ func main() {
 
 	// Creating string argument with default value and required set to false
 	s := parser.String("s", "string", &argparse.Options{Required: false, Help: "String to print", Default: "Hello"})
+	l := parser.List("l", "list", &argparse.Options{Required: false, Help: "List to print", Default: os.Getenv("ARGPARSE_LIST")})
 
 	// Parse input
 	err := parser.Parse(os.Args)
@@ -23,4 +24,5 @@ func main() {
 
 	// Finally print the collected string
 	fmt.Println(*s)
+	fmt.Println(*l)
 }
